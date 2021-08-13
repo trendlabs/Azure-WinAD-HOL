@@ -1,0 +1,108 @@
+##### Example of terraform.tfvars ##############################
+# You can change the below values to match with your environment
+# and save the updated content to a file name terraform.tfvars
+# in same folder.
+################################################################
+# az login ==> get id value
+# az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<above id value>"
+# in the output:
+# - appId is the client_id defined above.
+# - password is the client_secret defined above.
+# - tenant is the tenant_id defined above.
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret
+
+subscription_id = "deaf6606-c68b-4f32-b310-3735bfda9dc2"
+client_id       = "ebf29c8a-6db3-4fab-9g77-as51354a5cx0"
+client_secret   = "pwTGi7~1bA2nHGCeF_FABCLHHD9Abr87he"
+tenant_id       = "4f04657a-af5b-43c4-b64d-d6e06560f9c4"
+
+# Azure resource group name - which holds all the generated resources for labs
+# if resource_group_name = "none" then a new resource group will be created
+# with name starting with below "prefix" value
+resource_group_name = "VN"
+
+# resource location
+location = "South Central US"
+
+# set local tiem for lab resources
+local_time = SE Asia Standard Time"
+
+# Number of labs will be generated
+num_of_labs = 4
+
+# valid public domain = Microsoft 365 email domain for email test case
+master_domain = "test.online"
+
+# Windows client version
+# terraform can create VM using custom image:
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/image
+
+win_client_version = {
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "Windows-10"
+    sku       = "20h1-pro-g2"
+    version   = "19041.985.2105050408" //"latest"
+}
+
+# Windows server version
+win_server_version = {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2016-Datacenter"
+    version   = "2016.127.20180613" //"latest"
+}
+#prefix to add to all resource names
+prefix = "trend"
+
+# password must be complex - default domain user password
+domain_user_password = "P@ssw0rd123!"
+
+# password must be complex - use this to login to DC server
+domain_admin_username = "john"
+domain_admin_password = "00tr3ndM!cr0"
+
+# link to download Apex One agent
+# get from A1aaS web console
+apex_agent = "https://xxx.manage.trendmicro.com:443/officescan/download/agent_cloud_x64.msi"
+
+# Attendee Public IP addresses - will be allow to RDP to Jump host
+# number of IP = number of attendees / labs
+# need to get from the attendee so he/she could access to his/her own lab
+# in this example:
+# Thanh.Nguyen has public IP "1.55.250.147/32" and email address "thanh@test.online"
+# Dang.Mai has public IP "1.55.15.33/32" and email address Dangmn@test.online
+# ...so on
+# Microsoft 365 email account for lab - ie., thanhnq@test.online
+# JUMP host - users created by terraform must have same name here
+# Use this username & domain_user_password to rdp to jump host
+# number of account = number of labs specified above
+# RDP Public IP will be output accordingly after terraform successfully run,
+# ie., first rdp public IP = firstname in the list
+
+users[0] = {
+ management_ip = "1.55.250.147/32" // public IP of the user
+ email_account = "thanhnq" // means: thanhnq@test.online
+ internal_domain_username = "Thanh.Nguyen" // must be in GivenName.SurName format, number of users = number of labs specified above
+}
+users = [
+  {
+    management_ip = "1.55.250.147/32" // public IP of the user
+    email_account = "thanhnq" // means: thanhnq@test.online
+    internal_domain_username = "Thanh.Nguyen" // must be in GivenName.SurName format, number of users = number of labs specified above
+  },
+  {
+    management_ip = "1.55.15.33/32" // public IP of the user
+    email_account = "dangmai" // means: dangmai@test.online
+    internal_domain_username = "Dang.Mai" // must be in GivenName.SurName format, number of users = number of labs specified above
+  },
+  {
+     management_ip = "14.169.157.145/32" // public IP of the user
+     email_account = "nghialeminh" // means: nghialeminh@test.online
+     internal_domain_username = "Nghia.Le" // must be in GivenName.SurName format, number of users = number of labs specified above
+  },
+  {
+   management_ip = "14.169.157.145/32" // public IP of the user
+   email_account = "sy.vu" // means: sy.vu@test.online
+   internal_domain_username = "Sy.Vu" // must be in GivenName.SurName format, number of users = number of labs specified above
+  }
+]

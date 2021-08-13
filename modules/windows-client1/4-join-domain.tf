@@ -1,0 +1,30 @@
+resource "azurerm_virtual_machine_extension" "join-domain" {
+
+  depends_on = [time_sleep.wait-for-domain-to-provision]
+
+  name                 = "${local.virtual_machine_name}-join-domain"
+
+  virtual_machine_id = azurerm_virtual_machine.client.id
+  publisher            = "Microsoft.Compute"
+  type                 = "JsonADDomainExtension"
+  type_handler_version = "1.3"
+
+  settings = <<SETTINGS
+    {
+        "Name": "${var.active_directory_domain}",
+        "User": "${var.active_directory_username}@${var.active_directory_domain}",
+        "OUPath": "",
+        "Restart": "true",
+        "Options": "3"
+    }
+SETTINGS
+
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+        "Password": "${var.active_directory_password}"
+    }
+PROTECTED_SETTINGS
+
+count = (var.jump_host) ? 0 : 1
+
+}
