@@ -28,8 +28,8 @@ the modules section is originally from below project with some customization
 - Review the locals section in file main.tf, and change cidr settings if neccessary to avoid confict with existing resources in same resource group
 - When you are ready, open terminal and run below commands:
 ```
-  $ git clone https://github.com/trendlabs/xdr-demo.git
-  $ cd xdr-demo
+  $ git clone https://github.com/trendlabs/Azure-WinAD-HOL.git
+  $ cd Azure-WinAD-HOL
   $ terraform init
   $ terraform plan
   $ terraform apply -auto-approve
