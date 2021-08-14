@@ -10,12 +10,13 @@
 # - password is the client_secret defined above.
 # - tenant is the tenant_id defined above.
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret
+# Example for values as below, so yours have same format 
 
 subscription_id = "deaf6606-c68b-4f32-b310-3735bfda9dc2"
 client_id       = "ebf29c8a-6db3-4fab-9g77-as51354a5cx0"
 client_secret   = "pwTGi7~1bA2nHGCeF_FABCLHHD9Abr87he"
 tenant_id       = "4f04657a-af5b-43c4-b64d-d6e06560f9c4"
-
+########################################################################
 # Azure resource group name - which holds all the generated resources for labs
 # if resource_group_name = "none" then a new resource group will be created
 # with name starting with below "prefix" value
